@@ -1,0 +1,4 @@
+interface:
+  display_name: "geo-literature-download-skill"
+  short_description: "地球科学主题文献检索、开放获取验证与全文批量下载流水线"
+  default_prompt: "Use geo-literature-download-skill to search, verify and download open-access papers for a geoscience topic, then produce the search-detail and download-inventory tables."
