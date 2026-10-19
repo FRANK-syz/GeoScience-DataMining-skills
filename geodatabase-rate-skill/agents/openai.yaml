@@ -1,0 +1,4 @@
+interface:
+  display_name: "Geodatabase Rate Skill"
+  short_description: "地球科学数据库线索打标·评分·监管三阶段流水线"
+  default_prompt: "Use $geodatabase-rate-skill to 对这份地球科学数据线索表完成打标、打分与监管核查。"

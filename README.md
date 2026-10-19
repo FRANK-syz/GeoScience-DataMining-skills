@@ -7,6 +7,7 @@
 | 目录 | skill 名称 | 负责环节 | 状态 |
 | - | - | - | - |
 | [`geo-literature-download-skill/`](geo-literature-download-skill/) | `geo-literature-download-skill` | 地球科学数据线索挖掘 · 文献获取 | 已收录 |
+| [`geodatabase-rate-skill/`](geodatabase-rate-skill/) | `geodatabase-rate-skill` | 地球科学数据线索挖掘 · 标签打分与监管 | 已收录 |
 
 > 新增 skill 时：在仓库根新建与 skill 同名的顶层目录，按下方约定放置文件，并在上表补一行。
 
@@ -45,3 +46,13 @@ Copy-Item "<本仓库路径>\geo-literature-download-skill" "$env:USERPROFILE\.c
 **运行前提**：`pip install -r geo-literature-download-skill/requirements.txt`（`pypdf`、`requests`）；检索与部分站点的 JS 挑战下载需要浏览器（Computer Use 或内置浏览器）；需要网络。
 
 详细规格见 [`geo-literature-download-skill/SKILL.md`](geo-literature-download-skill/SKILL.md) 与 [`references/`](geo-literature-download-skill/references/)。
+
+### geodatabase-rate-skill
+
+**负责环节**：地球科学数据线索挖掘中的「标签打分」环节——按修改后的 NASA GCMD Keywords 体系对地球科学数据线索表做多标签分类打标，量化价值/不可替代性/敏感性评分，并由独立监管者核查，产出可第三方复核的分类标签表、评分表与监管核查报告。
+
+**功能**：以 Labeller → Rater → Superviser 三 Agent 流程，把一份数据线索清单（CSV/XLSX）转成 30 列分类标签表（`output/labelled_<原文件名>.csv` + 共现统计 `label_statistic.csv`）、33 列评分表（`labelled_<原文件名>_score.csv`）与采集优先级速判表（`Quick_report.csv`，P0–P4 优先级 + Tier 分级），监督者输出 `Warning.md` 核查报告。全过程写入 `breakpoint/*.json`，支持断点重启；行级数据唯一真源为 `breakpoint/labelled_batch_all.json`。
+
+**运行前提**：`pip install -r geodatabase-rate-skill/requirements.txt`（`openpyxl`、`requests`、`beautifulsoup4`）；需要网络（官网取证与 CrossRef 实测被引次数）；两张 GCMD 分类表（`地球科学分类.xlsx` / `-zh.xlsx`）已随 skill 放在 `assets/`，无需另行准备。
+
+详细规格见 [`geodatabase-rate-skill/SKILL.md`](geodatabase-rate-skill/SKILL.md) 与 [`references/`](geodatabase-rate-skill/references/)（`prompt-contract.md` / `pipeline.md` / `rubrics-and-traps.md`）。
