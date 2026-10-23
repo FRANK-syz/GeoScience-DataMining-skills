@@ -60,7 +60,7 @@
 |-|-|
 | `output/labelled_<stem>.csv` | 打标表，30 列，UTF-8 BOM |
 | `output/labelled_<stem>_score.csv` | 评分表，33 列 |
-| `output/Quick_report.csv` | 优先级速判表，19 列 |
+| `output/Quick_report.csv` | 优先级速判表，22 列 |
 | `output/label_statistic.csv` | 领域×平台×仪器 两两共现统计 |
 | `output/Warning.md` | 监管核查报告 |
 | `breakpoint/audit.json` | 全流程审计记录 |
