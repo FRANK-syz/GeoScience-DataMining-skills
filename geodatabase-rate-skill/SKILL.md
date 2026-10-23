@@ -36,6 +36,7 @@ Not for: plain data cleaning/visualisation, or scoring unrelated to GCMD classif
 - **Encoding:** input CSV is usually **GB2312**; write every output as **UTF-8 with BOM** (`utf-8-sig`).
 - **Multi-label separator** is exactly `", "` (English comma + space), never a bare comma.
 - **≥4 Topics** ⇒ that row's Topic and Term labels become `综合`.
+- **综合数据门户 exception:** rows classified as `综合数据门户` (a cross-domain discovery/navigation portal aggregating multiple databases, e.g. NASA Earthdata, NOAA NCEI) keep **only** the level label — every other field stays blank, and Rater/Superviser skip scoring and compliance checks for them. Rows are still kept (row count matches the input).
 - **大类字段 (地球科学领域-领域 / 平台-基座 / 仪器-大类) must never be blank.**
 - **Accessibility:** if the portal fails (403 / TLS / 404 / timeout), use an official mirror, another official page, or a Wayback snapshot — and record the substitute in evidence; it is **not** `正常访问`.
 - **Never silently skip or duplicate rows** — row count must match the input lead table.

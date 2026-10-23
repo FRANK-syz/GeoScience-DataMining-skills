@@ -87,6 +87,16 @@ def main():
     region_map = load_region_map(root)
     res = []
     for r in rows:
+        if r["数据库级别"] == "综合数据门户":
+            # 综合数据门户不参与后续评分：各分数/分级/优先级留白（prompt-contract §3 特例）
+            res.append(dict(r, **{
+                "数据库级别评分": "", "被引数量标签": "", "被引数量评分": "", "时间覆盖评分": "", "数据维度评分": "",
+                "数据价值总分": "", "研究区域重分类": "", "研究区域评分": "",
+                "获取方式（平台）": "", "获取方式（平台）评分": "", "获取方式（仪器）": "", "获取方式（仪器）评分": "",
+                "加工等级评分": "", "敏感性总分": "", "不可替代性总分": "",
+                "平均总分": "", "采集优先级标签": "", "次级标签": "",
+                "数据价值分级": "", "不可替代性分级": "", "敏感性分级": ""}))
+            continue
         ls = LEVEL[r["数据库级别"]]; cl, cs = cite(r["被引数量"]); tc = TCOV[r["时间覆盖"]]; dm = DIM[r["数据维度"]]
         val = 0.4 * ls + 0.4 * cs + 0.1 * tc + 0.1 * dm
         reg = region_of(r["研究区域"], region_map); rs = REGION[reg]
@@ -123,6 +133,9 @@ def main():
         print("WARN 未映射研究区域(默认按国家级计)，可在 breakpoint/region_map.json 指定:", sorted(set(UNMAPPED_REGION)))
     json.dump(res, open(os.path.join(root, "breakpoint", "score_audit.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     for x in res:
+        if x["数据库级别"] == "综合数据门户":
+            print("%-40s [综合数据门户: 不评分，留白]" % x["数据库/数据集/数据名称"][:40])
+            continue
         print("%-40s val=%5.1f sens=%5.1f irr=%3d avg=%5.2f %s %-7s %s" % (
             x["数据库/数据集/数据名称"][:40], x["数据价值总分"], x["敏感性总分"], x["不可替代性总分"],
             x["平均总分"], x["采集优先级标签"], x["次级标签"], x["数据价值分级"]))
